@@ -21,30 +21,9 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{ url_for('user_profile') }}">Profile</a>
                     </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Finances
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="{{ url_for('input_debts') }}">Debtors</a>
-                            <a class="dropdown-item" href="url_for('manage_debts') }}">Debts</a>
-                            <a class="dropdown-item" href="{{ url_for('show_monetary_values') }}">Balance</a>
-                            <a class="dropdown-item" href="{{ url_for('input_monetary_value') }}">Deposit</a>
-                            <!-- Add more options as needed -->
-                        </div>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" id="balance">Balance</a>
                     </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Transaction
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="{{ url_for('send_money') }}">Individual</a>
-                            <a class="dropdown-item" href="#">Group</a>
-                            <a class="dropdown-item" href="#">Option 3</a>
-                            <!-- Add more options as needed -->
-                        </div>
-                    </li>
-
                     <li class="nav-item">
                         <a class="nav-link" href="{{ url_for('logout') }}">Logout</a>
                     </li>
@@ -77,5 +56,27 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.6/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <!-- Custom JavaScript for fetching and displaying balance -->
+    <script>
+        $(document).ready(function() {
+            $('#balance-tab').click(function(e) {
+                e.preventDefault(); // Prevent default link behavior
+
+                $.ajax({
+                    type: 'GET',
+                    url: '/total_debt', // URL to fetch total debt from
+                    success: function(response) {
+                        // Update the content of the 'content' block with the total debt
+                        $('#content').html('<h2>Total Debt: $' + response.total_debt + '</h2>');
+                    },
+                    error: function(xhr, status, error) {
+                        // Handle errors
+                        console.error(error);
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 </html>
